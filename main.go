@@ -1,17 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/felipeas314/go/api/models"
-	"github.com/felipeas314/go/api/controllers"
+	"github.com/felipeas314/go/database"
+	"github.com/felipeas314/go/routers"
+	"log"
 )
 
 func main() {
-   r := gin.Default()
-
-   models.ConnectDatabase()
-   
-   r.GET("/books", controllers.FindBooks)
-
-   r.Run()
+	database.Setup()
+	r := routers.Setup()
+	if err := r.Run("127.0.0.1:8081"); err != nil {
+		log.Fatal(err)
+	}
 }
